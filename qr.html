@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        #qrCode {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Generator</h1>
+        <input type="text" id="textInput" placeholder="Enter text to encode" />
+        <button id="generateQRCode">Generate QR Code</button>
+        <div id="qrCode">
+            <!-- QR Code will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('generateQRCode').addEventListener('click', function() {
+            const text = document.getElementById('textInput').value;
+            const qrCodeDiv = document.getElementById('qrCode');
+            
+            if (text.trim() === '') {
+                alert('Please enter some text.');
+                return;
+            }
+
+            // QR Code Generator API URL
+            const url = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(text)}`;
+
+            // Create an image element to display the QR code
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = 'QR Code';
+
+            // Clear previous QR code and add new one
+            qrCodeDiv.innerHTML = '';
+            qrCodeDiv.appendChild(img);
+        });
+    </script>
+</body>
+</html>
